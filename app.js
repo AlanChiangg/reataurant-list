@@ -1,7 +1,7 @@
 // require packages used in the project
 const express = require('express')
 const mongoose = require('mongoose') // 載入mongoose
-const Restaurant = require('./models/restaurant.js')
+const Restaurant = require('./models/restaurant')
 const exphbs = require('express-handlebars')
 
 // 僅在非正式環境時, 使用 dotenv
@@ -33,7 +33,10 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 // routes setting
+
+// 瀏覽所有餐廳 (首頁)
 app.get('/', (req, res) => {
+  console.log(Restaurant)
   Restaurant.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
@@ -42,9 +45,6 @@ app.get('/', (req, res) => {
 
 // 搜尋餐廳
 app.get('/search', (req, res) => {
-  if (!req.query.keyword) {
-    return res.redirect('/')
-  }
 
   const keyword = req.query.keyword.toLowerCase().trim()
 
@@ -55,12 +55,16 @@ app.get('/search', (req, res) => {
       )
       res.render('index', { restaurants, keyword })
     })
+    .catch(error => console.log(error))
 })
 
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = Restaurant.find(
-    restaurant => restaurant.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant: restaurant })
+// 瀏覽指定餐廳
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
+  Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(error => console.log(error))
 })
 
 
