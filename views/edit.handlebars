@@ -1,0 +1,84 @@
+<div class="container search-bar">
+  <div class="search-bar-outer">
+    <div class="search-bar-inner">
+
+
+      <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+        <h6 class="my-2">餐廳名稱：</h6>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="請輸入餐廳名稱..." name="name" id="name"><button
+            class="btn btn-success" type="submit">更新資訊</button>
+        </div>
+      </form>
+
+      <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+        <h6 class="my-2">餐廳英文名：</h6>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="請輸入餐廳英文名..." name="name_en" id="name_en"><button
+            class="btn btn-success" type="submit">更新資訊</button>
+        </div>
+      </form>
+
+
+      <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+        <h6 class="my-2">餐廳類別：</h6>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="請輸入餐廳類別..." name="category" id="category"><button
+            class="btn btn-success" type="submit">更新資訊</button>
+        </div>
+      </form>
+
+      <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+        <h6 class="my-2">參考圖片：</h6>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="請輸入參考圖片網址..." name="image" id="image"><button
+            class="btn btn-success" type="submit">更新資訊</button>
+        </div>
+      </form>
+
+      <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+        <h6 class="my-2">地址：</h6>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="請輸入餐廳地址..." name="location" id="location"><button
+            class="btn btn-success" type="submit">更新資訊</button>
+        </div>
+      </form>
+
+      <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+        <h6 class="my-2">電話：</h6>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="請輸入餐廳電話..." name="phone" id="phone"><button
+            class="btn btn-success" type="submit">更新資訊</button>
+        </div>
+      </form>
+
+      <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+        <h6 class="my-2">Google Map：</h6>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="..." name="google_map" id="google_map"><button
+            class="btn btn-success" type="submit">更新資訊</button>
+        </div>
+      </form>
+
+      <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+        <h6 class="my-2">評分：</h6>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="請輸入評分..." name="rating" id="rating"><button
+            class="btn btn-success" type="submit">更新資訊</button>
+        </div>
+      </form>
+
+      <form action="/restaurants/{{restaurant._id}}/edit" method="POST">
+        <h6 class="my-2">介紹：</h6>
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="請輸入餐廳介紹..." name="description" id="description">
+          <button class="btn btn-success" type="submit">更新資訊</button>
+        </div>
+      </form>
+      
+      <div class="d-md-flex justify-content-md-center">
+        <a href="/"><button class="btn btn-secondary mt-3" type="button">返回首頁</button></a>
+      </div>
+    </div>
+  </div>
+</div>
