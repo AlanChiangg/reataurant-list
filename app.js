@@ -1,6 +1,8 @@
 // require packages used in the project
 const express = require('express')
 const mongoose = require('mongoose') // 載入mongoose
+const Restaurant = require('./models/restaurant.js')
+const exphbs = require('express-handlebars')
 
 // 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -10,8 +12,10 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express()
 const port = 3000
 
+// 連線到mongoDB
 mongoose.connect(process.env.MONGODB_URI) // 設定連線到 mongoDB
 
+// 取得資料庫連線狀態
 const db = mongoose.connection
 db.on('error', () => {
   console.log('mongodb error!')
@@ -20,10 +24,6 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
-// require express-handlebars here
-const exphbs = require('express-handlebars')
-
-const restaurantList = require('./restaurant.json')
 
 // express template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -34,19 +34,31 @@ app.use(express.static('public'))
 
 // routes setting
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  Restaurant.find()
+    .lean()
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.log(error))
 })
 
+// 搜尋餐廳
 app.get('/search', (req, res) => {
+  if (!req.query.keyword) {
+    return res.redirect('/')
+  }
+
   const keyword = req.query.keyword.toLowerCase().trim()
-  console.log(keyword)
-  const restaurants = restaurantList.results.filter(restaurant => restaurant.name.toLowerCase().trim().includes(keyword) || restaurant.category.toLowerCase().trim().includes(keyword)
-  )
-  res.render('index', { restaurants: restaurants, keyword: keyword })
+
+  Restaurant.find()
+    .lean()
+    .then(restaurantsData => {
+      const restaurants = restaurantsData.filter(restaurant => restaurant.name.toLowerCase().trim().includes(keyword) || restaurant.category.toLowerCase().trim().includes(keyword)
+      )
+      res.render('index', { restaurants, keyword })
+    })
 })
 
 app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = restaurantList.results.find(
+  const restaurant = Restaurant.find(
     restaurant => restaurant.id.toString() === req.params.restaurant_id)
   res.render('show', { restaurant: restaurant })
 })
