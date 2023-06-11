@@ -34,7 +34,10 @@
         {{restaurant.description}}
       </p>
       <div class="d-md-flex justify-content-md-end">
-        <a href="/"><button class="btn btn-secondary mb-2 " type="submit">返回首頁</button></a>
+        <form action="/restaurants/{{restaurant._id}}/delete" method="POST">
+          <button type="submit" class="btn btn-danger mx-2">Delete</button>
+        </form>
+        <a href="/"><button class="btn btn-secondary mb-2 " type="button">返回首頁</button></a>
       </div>
 
       <img class="rounded mx-auto d-block mb-4 w-100" src="{{ restaurant.image }}" alt="{{ restaurant.name }}"
