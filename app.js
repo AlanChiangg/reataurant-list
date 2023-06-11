@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose') // 載入mongoose
 const Restaurant = require('./models/restaurant')
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 
 // 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -29,14 +30,14 @@ db.once('open', () => {
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-// setting static files
+// setting body-parser, static files
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // routes setting
 
 // 瀏覽所有餐廳 (首頁)
 app.get('/', (req, res) => {
-  console.log(Restaurant)
   Restaurant.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
@@ -58,6 +59,17 @@ app.get('/search', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//新增餐廳的頁面
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
+
+app.post('/restaurants', (req, res) => {
+  Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 // 瀏覽指定餐廳
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
@@ -66,7 +78,6 @@ app.get('/restaurants/:id', (req, res) => {
     .then(restaurant => res.render('show', { restaurant }))
     .catch(error => console.log(error))
 })
-
 
 // start and listen on the Express server
 app.listen(port, () => {
