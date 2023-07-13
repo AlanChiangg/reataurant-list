@@ -3,6 +3,7 @@ const { engine } = require('express-handlebars')
 const methodOverride = require('method-override')
 const routes = require('./routes')
 const session = require('express-session')
+const usePassport = require('./config/passport')
 
 require('./config/mongoose')
 
@@ -21,6 +22,7 @@ app.use(session({
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+usePassport(app)
 app.use(routes)
 
 // start and listen on the Express server
