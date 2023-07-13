@@ -4,15 +4,19 @@
 
 ## 專案畫面
 
-![image](https://github.com/AlanChiangg/reataurant-list/blob/main/public/image/homepage.jpg)
+![image](https://github.com/AlanChiangg/reataurant-list/blob/main/public/image/img1.jpg)
 
-![image](https://github.com/AlanChiangg/reataurant-list/blob/main/public/image/info.jpg)
+![image](https://github.com/AlanChiangg/reataurant-list/blob/main/public/image/img2.jpg)
+
+![image](https://github.com/AlanChiangg/reataurant-list/blob/main/public/image/img3.jpg)
 
 ### Features - 產品功能
 
 1. 使用者可以點擊任一餐廳，查看更多餐廳資訊，如地址、電話與簡介
 2. 使用者可以依照中文名稱、英文名稱與餐廳類別進行搜尋
 3. 使用者可以新增/刪除/編輯餐廳資訊
+4. 使用者可以註冊會員
+5. 使用者可以透過Facebook登入
 
 ## Environment SetUp - 環境建置
 
@@ -44,19 +48,35 @@ npm install
 npm i -g nodemon 
 ```
 
-5. 安裝完畢後，設定環境變數連線 MongoDB
+5. 安裝完畢後，設定環境變數，請參照.env.example
 
 ```   
+FACEBOOK_ID=SKIP
+FACEBOOK_SECRET=SKIP
+FACEBOOK_CALLBACK=http://localhost:3000/auth/facebook/callback
+SESSION_SECRET=ThisIsMySecret
 MONGODB_URI=mongodb+srv://<Your MongoDB Account>:<Your MongoDB Password>@cluster0.xxxx.xxxx.net/<Your MongoDB Table><?retryWrites=true&w=majority
+PORT=3000
 ```
 
-6. 啟動伺服器，執行 app.js 檔案
+6. 建立種子資料，已先預設兩組帳號
+
+```
+npm run seed
+```
+
+```
+帳號：user1@example.com      帳號：user2@example.com
+密碼：12345678               密碼：12345678
+```
+
+7. 啟動伺服器，執行 app.js 檔案
 
 ```
 npm run dev
 ```
 
-7. 當 terminal 出現以下字樣，表示伺服器與資料庫已啟動並成功連結
+8. 當 terminal 出現以下字樣，表示伺服器與資料庫已啟動並成功連結
 
 ```
 Express is running on http://localhost:3000

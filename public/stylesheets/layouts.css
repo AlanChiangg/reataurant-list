@@ -35,6 +35,11 @@ header {
   color: #9b4b4b;
 }
 
+.card-body {
+  background-color: #fce2cf;
+  color: #9b4b4b;
+}
+
 h5 {
   color: #9b4b4b;
 }
