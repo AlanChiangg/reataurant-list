@@ -1,10 +1,9 @@
-// 引用 Express 與 Express 路由器
 const express = require('express')
 const router = express.Router()
 const Restaurant = require('../../models/restaurant')
 
-// 瀏覽所有餐廳 (首頁)
 router.get('/', (req, res) => {
+  const userId = req.user._id
   const sort = req.query.sort;
   const sortedRestaurants = {}
 
@@ -20,19 +19,18 @@ router.get('/', (req, res) => {
       break;
   }
 
-  Restaurant.find()
+  Restaurant.find({ userId })
     .lean()
     .sort(sortedRestaurants)
     .then(restaurants => res.render('index', { restaurants }))
     .catch(error => console.log(error))
 })
 
-// 搜尋餐廳
 router.get('/search', (req, res) => {
-
+  const userId = req.user._id
   const keyword = req.query.keyword.toLowerCase().trim()
 
-  Restaurant.find()
+  Restaurant.find({ userId })
     .lean()
     .then(restaurantsData => {
       const restaurants = restaurantsData.filter(restaurant => restaurant.name.toLowerCase().trim().includes(keyword) || restaurant.category.toLowerCase().trim().includes(keyword)
@@ -42,6 +40,4 @@ router.get('/search', (req, res) => {
     .catch(error => console.log(error))
 })
 
-
-// 匯出路由模組
 module.exports = router
