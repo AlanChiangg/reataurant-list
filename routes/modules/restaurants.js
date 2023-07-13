@@ -34,7 +34,7 @@ router.get('/:id/edit', (req, res) => {
 router.put('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
-  Restaurant.updateOne({ _id, userId }, req.body)
+  Restaurant.findByIdAndUpdate({ _id, userId }, req.body)
     .then(() => res.redirect(`/restaurants/${_id}`))
     .catch(error => console.log(error))
 })
