@@ -2,6 +2,7 @@ const express = require('express')
 const { engine } = require('express-handlebars')
 const methodOverride = require('method-override')
 const routes = require('./routes')
+const session = require('express-session')
 
 require('./config/mongoose')
 
@@ -10,6 +11,12 @@ const port = 3000
 
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
+
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
